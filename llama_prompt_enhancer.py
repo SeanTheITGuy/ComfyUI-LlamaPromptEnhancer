@@ -15,6 +15,13 @@ class LlamaPromptEnhancer:
     def INPUT_TYPES(cls):
         return {
             "required": {
+                "enhance_prompt": (
+                    "BOOLEAN",
+                    {
+                        "default": True,
+                    },
+                ),
+
                 "server_url": (
                     "STRING",
                     {
@@ -94,6 +101,7 @@ class LlamaPromptEnhancer:
 
     def enhance(
         self,
+        enhance_prompt,
         server_url,
         user_prompt,
         style,
@@ -103,10 +111,15 @@ class LlamaPromptEnhancer:
         seed,
     ):
 
+        # If not enhance_prompt, just return user input.
+        if not enhance_prompt:
+            print("[Llama Prompt Enhancer] Disabled.")
+            return (user_prompt),
+
         endpoint = server_url.rstrip("/") + "/v1/chat/completions"
 
         user_message = f"""
-Expand the following into a detailed Krea Image 2 prompt.
+Expand the following into a detailed natural language image  prompt (for example; Z Image Turbo, Krea2, etc)
 
 Preferred visual style: {style}
 
