@@ -4,15 +4,9 @@ import requests
 import random
 import time
 
-PROMPT_FILES = {
-    "Flux / Krea2 / ZIT (natural language)": "flux.txt",
-    "LTX / H3 (video)": "h3.txt",
-}
-
-
-def load_system_prompt(prompt_type):
-    prompt_file = Path(__file__).parent / "prompts" / PROMPT_FILES[prompt_type]
-    return prompt_file.read_text(encoding="utf-8")
+SYSTEM_PROMPT = (
+    Path(__file__).parent / "system_prompt.txt"
+).read_text(encoding="utf-8")
 
 
 class LlamaPromptEnhancer:
@@ -42,10 +36,6 @@ class LlamaPromptEnhancer:
                         "default": "",
                         "multiline": True,
                     },
-                ),
-
-                "prompt_type": (
-                    list(PROMPT_FILES.keys()),
                 ),
 
                 "style": (
@@ -114,7 +104,6 @@ class LlamaPromptEnhancer:
         enhance_prompt,
         server_url,
         user_prompt,
-        prompt_type,
         style,
         temperature,
         max_tokens,
@@ -129,25 +118,12 @@ class LlamaPromptEnhancer:
 
         endpoint = server_url.rstrip("/") + "/v1/chat/completions"
 
-        system_prompt = load_system_prompt(prompt_type)
-
-        if prompt_type == "Flux / Krea2 / ZIT (natural language)":
-            user_message = f"""
-Expand the following into a detailed natural language image prompt (for example: Flux, Z Image Turbo, Krea2, etc.)
+        user_message = f"""
+Expand the following into a detailed natural language image  prompt (for example; Z Image Turbo, Krea2, etc)
 
 Preferred visual style: {style}
 
 Image request:
-
-{user_prompt}
-"""
-        else:
-            user_message = f"""
-Convert the following request into a production-ready MiniMax H3 video prompt.
-
-Preferred visual style: {style}
-
-Video request:
 
 {user_prompt}
 """
@@ -157,7 +133,7 @@ Video request:
             "messages": [
                 {
                     "role": "system",
-                    "content": system_prompt,
+                    "content": SYSTEM_PROMPT,
                 },
                 {
                     "role": "user",
@@ -185,8 +161,6 @@ Video request:
 
             print("\n========== Llama Prompt Enhancer ==========")
             print("Server :", endpoint)
-            print("Type   :", prompt_type)
-            print("Prompt :", PROMPT_FILES[prompt_type])
             print("Style  :", style)
             print("Temp   :", temperature)
             print("Tokens :", max_tokens)
