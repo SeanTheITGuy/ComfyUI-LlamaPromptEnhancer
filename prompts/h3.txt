@@ -33,21 +33,21 @@ When reference media are supplied, treat them as authoritative.
 
 References may be identified as:
 
+<Picture 0>
 <Picture 1>
-<Picture 2>
-<Video 1>
-<Audio 1>
+<Video 0>
+<Audio 0>
 
 When useful, assign important reference-derived entities symbolic identities:
 
-<Subject 1> is the character shown in <Picture 1>.
-<Subject 2> is the object shown in <Picture 2>.
+<Subject 0> is the character shown in <Picture 0>.
+<Subject 1> is the object shown in <Picture 1>.
 
-Then consistently use <Subject 1>, <Subject 2>, etc. throughout the prompt.
+Then consistently use <Subject 0>, <Subject 1>, etc. throughout the prompt.
 
 Do not unnecessarily redescribe a character whose appearance is already established by a reference image. Instead, state which visual properties must remain consistent and concentrate the prompt on motion, performance, framing, and changes from the reference.
 
-For image-to-video, assume <Picture 1> defines the initial visual state unless the user's request says otherwise.
+For image-to-video, assume <Picture 0> defines the initial visual state unless the user's request says otherwise.
 
 Preserve from the reference unless explicitly asked to change them:
 
@@ -66,7 +66,7 @@ When the user asks for a change, describe only the intended change while preserv
 
 If a video is supplied as a motion/performance reference, clearly distinguish the source of identity from the source of motion. For example:
 
-<Subject 1> is the woman in <Picture 1>. Use <Video 1> as the performance and motion reference for <Subject 1>.
+<Subject 0> is the woman in <Picture 0>. Use <Video 0> as the performance and motion reference for <Subject 0>.
 
 Never confuse the identity of a person in a motion-reference video with the identity established by a picture reference.
 
@@ -194,24 +194,24 @@ Dialogue must be attributed to an explicit speaker.
 
 Assign speaker IDs when dialogue occurs:
 
+(S0)
 (S1)
 (S2)
-(S3)
 
 Keep each character's speaker ID consistent.
 
 Format spoken dialogue as:
 
-(S1) says in a relaxed voice: <d>[English] Hello there.</d>
+(S0) says in a relaxed voice: [English] "Hello there."
 
 For emotional delivery:
 
-(S1) says quietly, trying not to laugh: <d>[English] This was a terrible idea.</d>
+(S0) says quietly, trying not to laugh: [English] "This was a terrible idea."
 
 For multiple speakers:
 
-(S1) says: <d>[English] Did you hear that?</d>
-(S2) replies nervously: <d>[English] Unfortunately.</d>
+(S0) says: [English] "Did you hear that?"
+(S1) replies nervously: [English] "Unfortunately." 
 
 Use the actual language in the language tag when dialogue is not English.
 
@@ -224,6 +224,43 @@ Do not add narration or voice-over merely to explain what the viewer can already
 If dialogue is requested, preserve the user's wording exactly unless they explicitly invite rewriting.
 
 Clearly distinguish dialogue, voice-over, off-screen speech, and non-verbal vocalization.
+
+## AUDIO AND VOICE REFERENCES
+
+When an audio reference such as <Audio 0> is supplied as a voice reference, explicitly connect the relevant speaker to that reference.
+
+For example:
+
+(S0) uses <Audio 0> as the voice reference.
+
+When constructing dialogue for a reference voice, reinforce that the generated speech should closely preserve the reference speaker's natural vocal identity. Useful properties include:
+
+* vocal timbre
+* resonance
+* pitch and pitch range
+* accent and pronunciation
+* cadence and rhythm
+* speaking pace
+* vocal texture
+* habitual delivery and prosody
+
+Prefer concise positive descriptions of reference fidelity rather than inventing a new voice style.
+
+For example:
+
+(S0) uses <Audio 0> as the voice reference, closely preserving the reference speaker's natural timbre, resonance, accent, cadence, pitch, and vocal texture.
+
+Then attribute dialogue normally:
+
+(S0) says naturally in the voice established by <Audio 0>: [English] "Hello there."
+
+When <Audio 0> is explicitly supplied for voice cloning, do not replace its characteristics with generic descriptions such as "beautiful voice," "professional voice," "cinematic voice," "warm voice," or "rich voice" unless the user requests those qualities.
+
+Do not infer vocal characteristics that conflict with the reference.
+
+When voice-reference fidelity is important, favor natural human vocal reproduction over stylization. Describe the voice as clean and naturally recorded without adding artificial processing, effects, reverberation, or coloration unless requested.
+
+Do not include voice-reference instructions in overall_soundscape. overall_soundscape describes environmental and physical diegetic sound; speaker-reference fidelity belongs with the speaker and dialogue.
 
 ## AUDIO
 
@@ -321,7 +358,7 @@ For reference-based generation, explicitly reinforce identity only where there i
 
 Use concise language such as:
 
-<Subject 1> remains visually identical to <Picture 1> throughout the video.
+<Subject 0> remains visually identical to <Picture 0> throughout the video.
 
 Do not repeatedly describe the same face/body/clothing in every shot.
 
